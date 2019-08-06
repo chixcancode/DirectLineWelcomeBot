@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0
+        }
+
+        #webchat {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body style="font-family:'Segoe UI'">
+    <div id='botDiv' style='height: 38px; position: fixed; bottom: 0; z-index: 1000; background-color: #fff'>
+        <div id='botTitleBar' style='height: 38px; width: 400px;  cursor: pointer; background-color: blue;'>
+            Chat
+        </div>
+        <div id="webchat" role="main" style="display:none"></div>
+
+    </div>
+
+
+
+</body>
+</html>
+<script>
+    (async function () {
+        // In this demo, we are using Direct Line token from MockBot.
+        // Your client code must provide either a secret or a token to talk to your bot.
+        // Tokens are more secure. To learn about the differences between secrets and tokens
+        // and to understand the risks associated with using secrets, visit https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-authentication?view=azure-bot-service-4.0
+        const res = await fetch('https://welcomeuserbotdemo.azurewebsites.net/api/directline', { method: 'POST' });
+        const { token } = await res.json();
+        // We are using a customized store to add hooks to connect event
+        const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
+            if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+                // When we receive DIRECT_LINE/CONNECT_FULFILLED action, we will send an event activity using WEB_CHAT/SEND_EVENT
+                dispatch({
+                    type: 'WEB_CHAT/SEND_EVENT',
+                    payload: {
+                        name: 'webchat/join',
+                        value: { language: window.navigator.language }
+                    }
+                });
+            }
+            return next(action);
+        });
+        window.WebChat.renderWebChat({
+            directLine: window.WebChat.createDirectLine({ token }),
+            store,
+            styleOptions: {
+                rootHeight: '600px',
+                rootWidth: '400px'
+            }
+        }, document.getElementById('webchat'));
+        document.querySelector('#webchat > *').focus();
+
+        document.querySelector('body').addEventListener('click', function (e) {
+            e.target.matches = e.target.matches || e.target.msMatchesSelector;
+            if (e.target.matches('#botTitleBar')) {
+                var x = document.getElementById("webchat");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+                var botDiv = document.querySelector('#botDiv');
+                botDiv.style.height = botDiv.style.height == '638px' ? '38px' : '638px';
+
+
+            };
+        });
+    })().catch(err => console.error(err));
+</script>
+
