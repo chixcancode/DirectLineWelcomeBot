@@ -1,6 +1,6 @@
 ﻿# DirectLineWelcomeBot
 
-Bot Framework v4 empty bot sample.
+This sample will show how to send a welcome message in a webchat control using DirectLine channel.
 
 This bot has been created using [Bot Framework](https://dev.botframework.com), it shows the minimum code required to build a bot.
 
@@ -13,6 +13,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
   dotnet --version
   ```
 
+  - Deploy a Web App Bot
 ## To try this sample
 
 - In a terminal, navigate to `DirectLineWelcomeBot`

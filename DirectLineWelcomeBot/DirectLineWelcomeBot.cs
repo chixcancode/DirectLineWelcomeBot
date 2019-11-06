@@ -61,7 +61,7 @@ namespace DirectLineWelcomeBot
             var card = new HeroCard();
             card.Title = "Welcome to Bot Framework!";
             card.Text = @"Welcome to Welcome Users bot sample! This Introduction card is a great way to introduce your Bot to the user and suggest some things to get them started. We use this opportunity to recommend a few next steps for learning more creating and deploying bots.";
-            card.Images = new List<CardImage>() { new CardImage("https://aka.ms/bf-welcome-card-image") };
+            //card.Images = new List<CardImage>() { new CardImage("https://aka.ms/bf-welcome-card-image") };
             card.Buttons = new List<CardAction>()
             {
                 new CardAction(ActionTypes.OpenUrl, "Get an overview", null, "Get an overview", "Get an overview", "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"),

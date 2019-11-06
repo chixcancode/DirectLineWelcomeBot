@@ -24,8 +24,8 @@
 
 <body style="font-family:'Segoe UI'">
     <div id='botDiv' style='height: 38px; position: fixed; bottom: 0; z-index: 1000; background-color: #fff'>
-        <div id='botTitleBar' style='height: 38px; width: 400px;  cursor: pointer; background-color: blue;'>
-            Chat
+        <div id='botTitleBar' style='height: 38px; width: 400px; color: white;  cursor: pointer; background-color: blue;'>
+            <b>Chat</b>
         </div>
         <div id="webchat" role="main" style="display:none"></div>
 
@@ -37,10 +37,6 @@
 </html>
 <script>
     (async function () {
-        // In this demo, we are using Direct Line token from MockBot.
-        // Your client code must provide either a secret or a token to talk to your bot.
-        // Tokens are more secure. To learn about the differences between secrets and tokens
-        // and to understand the risks associated with using secrets, visit https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-authentication?view=azure-bot-service-4.0
         const res = await fetch('/api/directline', { method: 'POST' });
         const { token } = await res.json();
         // We are using a customized store to add hooks to connect event
@@ -61,9 +57,14 @@
             directLine: window.WebChat.createDirectLine({ token }),
             store,
             styleOptions: {
-                rootHeight: '600px',
-                rootWidth: '400px'
-            }
+                rootHeight: '560px',
+                rootWidth: '400px',
+                 botAvatarImage: 'https://icon-library.net/images/bot-icon/bot-icon-7.jpg',
+                  botAvatarInitials: 'BF',
+                  userAvatarImage: 'https://cdn.pixabay.com/photo/2016/11/14/17/39/person-1824144_1280.png',
+                  userAvatarInitials: 'WC'
+            },
+             sendTypingIndicator: true,
         }, document.getElementById('webchat'));
         document.querySelector('#webchat > *').focus();
 
